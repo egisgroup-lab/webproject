@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Egis – Metro | Urban Transport — Wireframe v4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;600;700&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--midnight:#08212C;--egis-green:#ABC022;--blue-gray:#5D848A;--bg:#f6f6f6;--line:#dddddd;--line2:#cfcfcf}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--midnight)}
+body{font-family:'EB Garamond', serif}
+h1,h2,h3{font-family:'Urbanist', sans-serif; letter-spacing:.2px; margin:0 0 .55rem}
+.tag{display:inline-block;margin-left:.5rem;padding:.1rem .45rem;border:1px solid var(--line2);color:#68717a;font:600 11px 'Urbanist',sans-serif;border-radius:3px;transform:translateY(-1px)}
+.narrative-label{display:inline-block;font:600 11px 'Urbanist',sans-serif;color:#9b6a00;background:#fff8e6;border:1px solid #f0d080;border-radius:3px;padding:.15rem .55rem;margin-bottom:.75rem;letter-spacing:.3px}
+.meta-note{font:600 12px 'Urbanist',sans-serif;color:#64707a;margin:.25rem 0 1rem}
+.section-desc{font:400 14px 'EB Garamond',serif;color:#5a6870;border-left:3px solid var(--egis-green);padding-left:12px;margin:0 0 24px;line-height:1.6;max-width:680px}
+.small{font-size:13.5px}
+.container{width:1120px;max-width:95%;margin:0 auto;padding:60px 20px}
+.section{padding:60px 0;border-bottom:1px solid var(--line)}
+.text{line-height:1.7}
+header{background:#fff;border-bottom:1px solid var(--line)}
+.breadcrumb{font:500 14px 'Urbanist',sans-serif;opacity:.9;padding:14px 0}
+.breadcrumb a{color:var(--midnight);text-decoration:none}
+.breadcrumb .sep{opacity:.45;padding:0 .35rem}
+.cta-sticky{position:fixed;z-index:9999;top:12px;right:18px;background:var(--egis-green);color:#fff;font:600 14px 'Urbanist',sans-serif;padding:10px 16px;border:none;border-radius:20px;cursor:pointer;text-decoration:none;box-shadow:0 3px 10px rgba(0,0,0,.18)}
+.cta-sticky:focus{outline:2px solid #fff4;outline-offset:2px}
+.hero{position:relative;min-height:520px;display:flex;align-items:flex-end;color:#fff;background:url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/wAARCAHCAyADASIAAhEBAxEB/8QAHAAAAAAcBAAAAAAAAAAAAAAAAAECAwQFBgcI") center/cover no-repeat}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.10) 0%, rgba(0,0,0,.6) 100%)}
+.hero .inner{position:relative;z-index:1;padding:56px 0}
+.hero h1{font-size:64px}
+.hero h2{font-size:24px;max-width:800px;opacity:.95;margin-top:.35rem}
+.grid-main{display:grid;grid-template-columns:3fr 1fr;gap:40px}
+.card{background:#fff;border:1px solid var(--line2);border-radius:8px;padding:22px;margin-bottom:20px}
+.card h3{margin-top:0}
+.card-ghost{background:#fafafa;border:2px dashed var(--line2);border-radius:8px;padding:22px}
+.btn{display:inline-block;padding:10px 14px;border-radius:22px;text-decoration:none;font:600 14px 'Urbanist',sans-serif;margin:6px 8px 0 0;border:1px solid transparent}
+.btn--blue{background:var(--blue-gray);color:#fff}
+.btn--outline{background:transparent;border:1px solid var(--midnight);color:var(--midnight)}
+.btn--outline-small{background:transparent;border:1px solid var(--blue-gray);color:var(--blue-gray);font-size:13px;padding:7px 12px}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:6px}
+.project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.project{background:#fff;border:1px solid var(--line2);border-radius:8px;overflow:hidden}
+.project img{width:100%;height:190px;object-fit:cover;display:block}
+.project .meta{padding:12px 14px}
+.project .meta h4{font:600 16px 'Urbanist',sans-serif;margin:.2rem 0 .2rem}
+.project .meta p{margin:0;font-size:15px}
+.expert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.expert{background:#fff;border:1px solid var(--line2);border-radius:8px;padding:18px}
+.expert h3{font-size:18px}
+.sidebar{position:sticky;top:20px}
+.side-block{background:#fff;border:1px solid var(--line2);border-radius:8px;padding:18px;margin-bottom:18px}
+.side-block h3{margin:0 0 .35rem}
+.side-block .sub{font:500 13px 'EB Garamond',serif;color:#4a5a64;margin:0 0 10px}
+.side-block hr{border:0;border-top:1px solid var(--line);margin:10px 0}
+.btn-stack .btn{display:block;width:100%;text-align:center;margin:.35rem 0}
+.see-also{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.see-also a{font:500 13px 'Urbanist',sans-serif;color:var(--blue-gray);text-decoration:none;border-bottom:1px solid var(--line2)}
+.see-also a:hover{border-color:var(--blue-gray)}
+.drawer{position:fixed;top:0;right:-420px;width:380px;height:100vh;background:#fff;border-left:1px solid var(--line2);box-shadow:-8px 0 24px rgba(0,0,0,.08);padding:22px;transition:right .28s ease;z-index:9998}
+.drawer.active{right:0}
+.drawer h2{font-size:22px}
+.drawer input,.drawer select,.drawer textarea{width:100%;padding:10px;border:1px solid var(--line2);border-radius:6px;margin:.4rem 0 .8rem;font:400 15px 'EB Garamond',serif}
+.drawer .submit{background:var(--midnight);color:#fff;border:none;border-radius:6px;padding:12px 14px;font:600 14px 'Urbanist',sans-serif;cursor:pointer}
+footer{background:var(--midnight);color:#fff;text-align:center;padding:36px;margin-top:60px}
+@media (max-width:980px){.grid-main{grid-template-columns:1fr}.hero{min-height:380px}.hero h1{font-size:46px}.btn-row{flex-wrap:wrap}}
+</style>
+<script>function toggleDrawer(){document.getElementById('contactDrawer').classList.toggle('active');}</script>
+</head>
+<body>
+
+<!--
+  PAGE NARRATIVE — Metro sub-sector page (v4)
+  ============================================
+  1. WE UNDERSTAND YOUR CHALLENGES
+     Opens in the client's world. Names the real operational and
+     technical problems metro operators and authorities face.
+
+  2. HERE IS WHAT WE DO BEST  →  "Our Core Metro Strengths"
+     Up to 6 cards covering disciplines, sector expertises and
+     cross-cutting capabilities — whatever is most differentiating
+     for Egis on Metro. Mixed nature assumed and accepted.
+
+  3. HERE ARE OUR TOOLS  →  "Our Solutions"
+     Packaged, named deliverables. Sector-specific and transversal
+     mixed — single row, single colour, no distinction.
+
+  4. HERE IS OUR PROOF  →  "Selected Metro Projects"
+     3 reference projects.
+
+  5. HERE IS WHO TO CONTACT  →  "Metro Leadership & Experts"
+
+  SIDEBAR:
+  - Latest News & Insights (editorial, no dedicated page)
+  - Our Services on Metro (links to dedicated service pages)
+  - See also: Transversal Capabilities (links to capability pages)
+  ============================================
+-->
+
+<a class="cta-sticky" href="javascript:void(0)" onclick="toggleDrawer()">Contact a Metro Expert</a>
+<header><div class="container"><nav class="breadcrumb" aria-label="breadcrumb"><a href="#">What we do</a><span class="sep">›</span><a href="#">Urban transport</a><span class="sep">›</span><span>Metro</span></nav></div></header>
+
+<section class="hero" role="img" aria-label="Metro banner image">
+  <div class="container inner">
+    <h1>Metro <span class="tag">H1</span></h1>
+    <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. <span class="tag">H2 — tagline</span></h2>
+  </div>
+</section>
+
+<div class="container grid-main">
+  <main>
+
+    <!-- ① WE UNDERSTAND YOUR CHALLENGES -->
+    <section class="section" id="intro">
+      <div class="narrative-label">① We understand your challenges</div>
+      <h2>Metro in context <span class="tag">H2</span></h2>
+      <p class="section-desc">This opening section speaks to the client's world, not Egis' organisation. It names the strategic and operational context — urbanisation pressure, ageing networks, automation transitions — before mentioning Egis.</p>
+      <div class="meta-note">Recommended length: 180–200 words</div>
+      <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus convallis, felis in elementum sagittis, metus urna viverra magna, nec semper neque ligula id mauris. Curabitur consequat risus vel mauris pharetra, vitae commodo purus dictum. Vivamus ligula urna, semper nec porta in, placerat sit amet nisl. Integer dignissim, eros vitae blandit bibendum, erat eros sodales velit, ac finibus tortor felis id odio. Nulla ut nisi mi. Donec rutrum felis eu mauris euismod, vitae laoreet est efficitur. Pellentesque sit amet tempus risus.</p>
+    </section>
+
+    <!-- ① cont. — KEY CLIENT CHALLENGES -->
+    <section class="section" id="challenges">
+      <div class="narrative-label">① We understand your challenges — detail</div>
+      <h2>Key Client Challenges <span class="tag">H2</span></h2>
+      <p class="section-desc">2–3 named challenges, each with a short description. Written from the client's perspective — operational, financial, regulatory pressures — not from Egis' service catalogue.</p>
+      <div class="meta-note">Recommended total: 250–300 words</div>
+      <p class="text"><em>Short intro:</em> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere, turpis a egestas fermentum, mi metus dictum augue.</p>
+      <h3>Automation &amp; digitalisation pressure <span class="tag">H3</span></h3>
+      <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum neque massa, vitae porta velit sollicitudin eget. Sed nibh massa, hendrerit ac leo eget, maximus volutpat risus.</p>
+      <h3>Modernising ageing networks under full operation <span class="tag">H3</span></h3>
+      <p class="text">Integer mollis, purus et cursus dignissim, augue ante aliquet tortor, quis egestas ipsum libero at sem. Phasellus euismod facilisis nisl non aliquet. Vestibulum ultrices risus magna.</p>
+    </section>
+
+    <!-- ② HERE IS WHAT WE DO BEST -->
+    <section class="section" id="strengths">
+      <div class="narrative-label">② Here is what we do best</div>
+      <h2>Our Core Metro Strengths <span class="tag">H2</span></h2>
+      <p class="section-desc">Up to 6 cards — can be technical disciplines (e.g. Tunnels, Signalling), sector-specific expertises (e.g. Driverless Integration), or cross-cutting capabilities (e.g. Energy Efficiency). The mix reflects what Egis does best on Metro — the 6 most differentiating capabilities, as defined by Service Line Leaders.</p>
+      <div class="meta-note">Up to 6 cards (2 rows of 3) • ~90 words each • Mixed nature: disciplines, expertises, capabilities all accepted</div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+        <div class="card">
+          <h3>Driverless Systems Integration (GoA4) <span class="tag">H3</span></h3>
+          <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra malesuada massa, vitae tristique arcu laoreet. Aliquam ac feugiat leo, in hendrerit orci. Nulla vehicula aliquet nunc, eget pulvinar mi tempor. Donec sodales pharetra lobortis. Morbi cursus tortor vitae felis convallis.</p>
+        </div>
+        <div class="card">
+          <h3>Modernisation Under Operation <span class="tag">H3</span></h3>
+          <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae rhoncus nulla. Duis fringilla nisi vel tellus ultricies, id malesuada est vehicula. Suspendisse pulvinar hendrerit arcu vitae aliquet. Aenean interdum sapien sed mauris tincidunt, vitae cursus velit placerat.</p>
+        </div>
+        <div class="card">
+          <h3>Systems Engineering &amp; Integration (ISI) <span class="tag">H3</span></h3>
+          <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nunc ut elit tempus iaculis. Integer venenatis consequat nisi, vitae viverra elit fermentum. Vivamus eget risus viverra, ultricies justo ac, dapibus ante. Donec vitae suscipit urna. Cras sed urna justo.</p>
+        </div>
+        <div class="card">
+          <h3>Station &amp; Interchange Design <span class="tag">H3</span></h3>
+          <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet tempus risus. Duis semper fringilla augue, et faucibus libero pharetra sed. Quisque luctus varius mi nec luctus. Integer id varius orci. Sed efficitur libero in ligula dictum.</p>
+        </div>
+        <div class="card">
+          <h3>Operational Performance &amp; Advisory <span class="tag">H3</span></h3>
+          <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus convallis, felis in elementum sagittis, metus urna viverra magna. Curabitur consequat risus vel mauris pharetra. Vivamus ligula urna, semper nec porta in, placerat sit amet nisl. Integer dignissim eros vitae.</p>
+        </div>
+        <div class="card">
+          <h3>Communication Based Train Control (CBTC) <span class="tag">H3</span></h3>
+          <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed efficitur libero in ligula dictum, ac vestibulum leo convallis. In quis convallis lorem. Donec eu massa nec nisi interdum rhoncus. Integer id varius orci. Vestibulum sit amet augue et libero tempus ultricies.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ HERE ARE OUR TOOLS -->
+    <section class="section" id="solutions">
+      <div class="narrative-label">③ Here are our tools</div>
+      <h2>Our Solutions <span class="tag">H2</span></h2>
+      <p class="section-desc">Packaged, named deliverables — proprietary tools, methodologies or frameworks that Egis can offer as standalone products. Sector-specific and transversal solutions are mixed in a single row. No colour distinction. Each button links to a dedicated solution page.</p>
+      <div class="meta-note">Single row — blue-gray buttons — no distinction between sector-specific and transversal at this stage</div>
+      <div class="btn-row">
+        <a class="btn btn--blue" href="#">Passenger-flow simulation (Viswalk®)</a>
+        <a class="btn btn--blue" href="#">Carbon LCA</a>
+        <a class="btn btn--blue" href="#">Digital Twin</a>
+        <a class="btn btn--blue" href="#">Low-carbon tunnel lining</a>
+      </div>
+    </section>
+
+    <!-- ④ HERE IS OUR PROOF -->
+    <section class="section" id="projects">
+      <div class="narrative-label">④ Here is our proof</div>
+      <h2>Selected Metro Projects <span class="tag">H2</span></h2>
+      <p class="section-desc">3 reference projects chosen for their relevance to the challenges named above — not necessarily the largest, but the most illustrative of Egis' differentiating capabilities on Metro.</p>
+      <div class="project-grid">
+        <article class="project">
+          <div style="width:100%;height:190px;background:#d4dfe2;display:flex;align-items:center;justify-content:center">
+            <span style="font:600 13px 'Urbanist',sans-serif;color:#8a9da3">Project image</span>
+          </div>
+          <div class="meta"><h4>Metro Project 1 <span class="tag">H4</span></h4><p>City, Country — Lorem ipsum dolor sit amet, consectetur.</p></div>
+        </article>
+        <article class="project">
+          <div style="width:100%;height:190px;background:#d4dfe2;display:flex;align-items:center;justify-content:center">
+            <span style="font:600 13px 'Urbanist',sans-serif;color:#8a9da3">Project image</span>
+          </div>
+          <div class="meta"><h4>Metro Project 2 <span class="tag">H4</span></h4><p>City, Country — Lorem ipsum dolor sit amet, consectetur.</p></div>
+        </article>
+        <article class="project">
+          <div style="width:100%;height:190px;background:#d4dfe2;display:flex;align-items:center;justify-content:center">
+            <span style="font:600 13px 'Urbanist',sans-serif;color:#8a9da3">Project image</span>
+          </div>
+          <div class="meta"><h4>Metro Project 3 <span class="tag">H4</span></h4><p>City, Country — Lorem ipsum dolor sit amet, consectetur.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ⑤ HERE IS WHO TO CONTACT -->
+    <section class="section" id="experts">
+      <div class="narrative-label">⑤ Here is who to contact</div>
+      <h2>Metro Leadership &amp; Experts <span class="tag">H2</span></h2>
+      <p class="section-desc">Named contacts with photo, title and a short bio. These are the people a client would actually call — Global Metro Lead, regional directors, or technical specialists on a specific strength.</p>
+      <div class="expert-grid">
+        <div class="expert"><h3>Alex Morgan <span class="tag">H3</span></h3><p class="text">Global Metro Lead — Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+        <div class="expert"><h3>Jordan Taylor <span class="tag">H3</span></h3><p class="text">Systems Engineering Director — Lorem ipsum dolor sit amet, consectetur.</p></div>
+        <div class="expert"><h3>Casey Parker <span class="tag">H3</span></h3><p class="text">Automation &amp; Driverless Lead — Lorem ipsum dolor sit amet, consectetur.</p></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" aria-label="Sidebar">
+
+    <!-- News -->
+    <section class="side-block">
+      <h3>Latest News <span class="tag">H3</span></h3>
+      <p class="sub">Recent updates on Metro projects and insights.</p>
+      <div class="item"><p class="text">News item lorem ipsum dolor sit amet.</p><hr></div>
+      <div class="item"><p class="text">News item lorem ipsum dolor sit amet.</p><hr></div>
+      <div class="item"><p class="text">News item lorem ipsum dolor sit amet.</p></div>
+    </section>
+
+    <!-- Insights -->
+    <section class="side-block">
+      <h3>Latest Insights <span class="tag">H3</span></h3>
+      <p class="sub">Thought leadership and technical publications.</p>
+      <div class="item"><p class="text">Insight item lorem ipsum dolor sit amet.</p><hr></div>
+      <div class="item"><p class="text">Insight item lorem ipsum dolor sit amet.</p><hr></div>
+      <div class="item"><p class="text">Insight item lorem ipsum dolor sit amet.</p></div>
+    </section>
+
+    <!-- Our Services on Metro -->
+    <section class="side-block">
+      <h3>Our Services on Metro <span class="tag">H3</span></h3>
+      <p class="sub">How we work with you — each links to a dedicated service page.</p>
+      <div class="btn-stack">
+        <a class="btn btn--outline" href="#">Advisory &amp; Strategy</a>
+        <a class="btn btn--outline" href="#">Project Management</a>
+        <a class="btn btn--outline" href="#">Design &amp; Engineering</a>
+        <a class="btn btn--outline" href="#">Construction Management</a>
+        <a class="btn btn--outline" href="#">Operations Support</a>
+        <a class="btn btn--outline" href="#">Integrated Operations</a>
+      </div>
+    </section>
+
+    <!-- See also: Transversal Capabilities -->
+    <section class="side-block">
+      <h3>See also <span class="tag">H3</span></h3>
+      <p class="sub">Transversal capabilities we bring to Metro projects — each links to a dedicated capability page.</p>
+      <div class="see-also">
+        <a href="#">Energy Efficiency</a>
+        <a href="#">BIM &amp; Digital Delivery</a>
+        <a href="#">Geotechnics</a>
+        <a href="#">Fire &amp; Life Safety</a>
+        <a href="#">Noise &amp; Vibration</a>
+      </div>
+    </section>
+
+  </aside>
+</div>
+
+<!-- Contact Drawer -->
+<aside id="contactDrawer" class="drawer" aria-label="Contact a Metro Expert">
+  <h2>Contact a Metro Expert</h2>
+  <p class="text small">Please leave your details and a short message.</p>
+  <input type="text" placeholder="Full name" required>
+  <input type="email" placeholder="Email" required>
+  <input type="text" placeholder="Company">
+  <select><option>Select your interest</option><option>Metro Automation</option><option>Station &amp; Interchange Design</option><option>Systems Integration</option><option>Operational Advisory</option></select>
+  <textarea rows="5" placeholder="Message (optional)"></textarea>
+  <button class="submit" onclick="toggleDrawer()">Send message</button>
+</aside>
+
+<footer>Egis Corporate Footer</footer>
+</body>
+</html>
