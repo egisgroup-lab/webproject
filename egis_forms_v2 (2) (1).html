@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Egis - Web Taxonomy Input Form (Metro)</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f5f5f5;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-size:14px;color:#201f1e;min-height:100vh}
+
+.ms-topbar{height:48px;background:#fff;border-bottom:1px solid #e1dfdd;display:flex;align-items:center;padding:0 20px;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.ms-topbar .forms-logo{display:flex;align-items:center;gap:7px;font-size:15px;font-weight:600;color:#201f1e}
+.ms-topbar .forms-logo svg{width:22px;height:22px}
+.ms-topbar .divider{width:1px;height:20px;background:#e1dfdd;margin:0 4px}
+.ms-topbar .doc-title{font-size:14px;color:#605e5c;font-weight:400}
+
+.ms-tabs{background:#fff;border-bottom:1px solid #e1dfdd;display:flex;align-items:flex-end;padding:0 20px}
+.ms-tab{padding:10px 16px;font-size:13px;color:#605e5c;cursor:pointer;border-bottom:2px solid transparent;font-weight:400;white-space:nowrap}
+.ms-tab.active{color:#0078d4;border-bottom-color:#0078d4;font-weight:600}
+
+.canvas{max-width:680px;margin:32px auto;padding:0 16px 60px}
+
+.form-card{background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.1);margin-bottom:12px;overflow:hidden}
+.form-card-header{border-top:6px solid #ABC022;padding:24px 28px 20px}
+.form-card-header h1{font-size:22px;font-weight:600;color:#201f1e;margin-bottom:8px;line-height:1.3}
+.form-card-header .subtitle{font-size:13px;color:#605e5c;line-height:1.6}
+.form-card-header .tag-row{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.ftag{background:#f0f9d4;color:#3d5a00;font-size:11px;font-weight:600;padding:3px 10px;border-radius:2px;letter-spacing:.3px}
+
+/* Terminology table */
+.term-table{margin-top:16px;border:1px solid #e1dfdd;border-radius:3px;overflow:hidden}
+.term-table-title{background:#f3f2f1;padding:7px 14px;font-size:11px;font-weight:700;color:#605e5c;text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid #e1dfdd}
+.term-table table{width:100%;border-collapse:collapse}
+.term-table td{padding:6px 14px;font-size:12px;border-bottom:1px solid #f3f2f1;vertical-align:top}
+.term-table tr:last-child td{border-bottom:none}
+.term-table td:first-child{font-weight:600;color:#201f1e;width:38%}
+.term-table td:nth-child(2){color:#605e5c;width:30%}
+.term-table td:nth-child(3){color:#0078d4;font-style:italic;width:32%}
+.term-table tr:nth-child(even) td{background:#faf9f8}
+
+.wf-callout{background:#fffbe6;border:1px solid #ffd333;border-radius:4px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.wf-callout p{font-size:13px;color:#4a3f00;flex:1;line-height:1.5}
+.wf-callout p strong{color:#3d3300}
+.wf-btn{background:#0078d4;color:#fff;font-size:13px;font-weight:600;padding:7px 16px;border-radius:2px;border:none;cursor:pointer;text-decoration:none;white-space:nowrap;display:inline-block;font-family:inherit}
+.wf-btn:hover{background:#006cbe}
+
+.section-card{background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:12px;overflow:hidden}
+.section-label{background:#f3f2f1;padding:10px 28px;font-size:12px;font-weight:600;color:#605e5c;text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid #e1dfdd}
+
+.question{padding:16px 28px 12px;border-bottom:1px solid #f3f2f1}
+.question:last-child{border-bottom:none}
+.q-num{font-size:11px;color:#a19f9d;font-weight:400;margin-bottom:4px}
+.q-text{font-size:14px;font-weight:600;color:#201f1e;margin-bottom:2px;line-height:1.4}
+.q-text .req{color:#a4262c;margin-left:2px}
+.q-text .opt{color:#a19f9d;font-size:12px;font-weight:400;margin-left:6px}
+.q-desc{font-size:12px;color:#605e5c;margin-bottom:10px;line-height:1.55}
+.q-desc strong{color:#201f1e}
+.q-desc em{color:#8a8886}
+
+.ms-input{width:100%;border:1px solid #8a8886;border-radius:2px;padding:7px 10px;font-family:inherit;font-size:14px;color:#201f1e;outline:none;background:#fff;transition:border-color .15s}
+.ms-input:focus{border-color:#0078d4;box-shadow:inset 0 0 0 1px #0078d4}
+.ms-input.autofill{background:#faf9f8;color:#a19f9d;cursor:default;border-color:#c8c6c4}
+.ms-textarea{width:100%;border:1px solid #8a8886;border-radius:2px;padding:7px 10px;font-family:inherit;font-size:14px;color:#201f1e;outline:none;resize:vertical;min-height:72px;background:#fff;transition:border-color .15s}
+.ms-textarea:focus{border-color:#0078d4;box-shadow:inset 0 0 0 1px #0078d4}
+.ms-textarea.free{min-height:88px;background:#fdfcfb}
+
+.auto-badge{display:inline-block;font-size:11px;color:#0078d4;background:#e8f4fc;padding:2px 8px;border-radius:2px;font-weight:600;margin-left:6px}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.repeat-sep{border:none;border-top:1px dashed #e1dfdd;margin:4px 0 0}
+
+.free-block{margin:0 28px 16px;background:#faf9f8;border:1px dashed #c8c6c4;border-radius:2px;padding:12px 14px}
+.free-block-label{font-size:12px;font-weight:600;color:#605e5c;margin-bottom:4px}
+.free-block-hint{font-size:11px;color:#a19f9d;margin-bottom:8px;line-height:1.5}
+
+/* Service groups */
+.service-groups{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.service-group{border:1px solid #e1dfdd;border-radius:3px;overflow:hidden}
+.service-group-header{
+  background:#f3f2f1;
+  padding:8px 12px;
+  font-size:12px;
+  font-weight:700;
+  color:#201f1e;
+  letter-spacing:.2px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  user-select:none;
+}
+.service-group-header:hover{background:#ebe9e8}
+.service-group-header .toggle{font-size:10px;color:#8a8886;transition:transform .2s}
+.service-group-header.open .toggle{transform:rotate(180deg)}
+.service-group-body{padding:4px 0;display:none}
+.service-group-body.open{display:block}
+.ms-check-item{display:flex;align-items:flex-start;gap:10px;padding:7px 12px;border:1px solid transparent;border-radius:2px;cursor:pointer}
+.ms-check-item:hover{background:#f3f2f1}
+.ms-check-item input[type=checkbox]{width:16px;height:16px;accent-color:#0078d4;cursor:pointer;flex-shrink:0;margin-top:1px}
+.ms-check-item .check-label{font-size:13px;color:#201f1e;cursor:pointer;line-height:1.35}
+.ms-check-item .check-label small{display:block;font-size:11px;color:#8a8886;font-weight:400;margin-top:1px}
+
+/* Transversal checklist */
+.ms-checks{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+
+.submit-card{background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.08);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.submit-card p{font-size:12px;color:#605e5c}
+.ms-submit{background:#0078d4;color:#fff;font-family:inherit;font-size:14px;font-weight:600;padding:9px 24px;border-radius:2px;border:none;cursor:pointer;transition:background .15s}
+.ms-submit:hover{background:#106ebe}
+
+.ms-footer{text-align:center;padding:24px 0 12px;font-size:11px;color:#a19f9d}
+
+@media(max-width:560px){
+  .two-col{grid-template-columns:1fr}
+  .canvas{padding:0 8px 60px}
+  .form-card-header,.section-label,.question,.submit-card,.free-block{padding-left:16px;padding-right:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="ms-topbar">
+  <div class="forms-logo">
+    <svg viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="3" fill="#0078d4"/><rect x="5" y="5" width="7" height="2" rx="1" fill="white"/><rect x="5" y="9" width="12" height="2" rx="1" fill="white"/><rect x="5" y="13" width="9" height="2" rx="1" fill="white"/></svg>
+    Microsoft Forms
+  </div>
+  <div class="divider"></div>
+  <span class="doc-title">Egis Web Taxonomy - UMB01 Metros</span>
+</div>
+
+<div class="ms-tabs">
+  <div class="ms-tab active">Questions</div>
+  <div class="ms-tab">Responses</div>
+</div>
+
+<div class="canvas">
+
+  <!-- HEADER -->
+  <div class="form-card">
+    <div class="form-card-header">
+      <h1>Egis Digital Platform - Website Content Input Form</h1>
+      <div class="subtitle">
+        We are redesigning key pages on the Egis website - sector pages, service architecture and solutions positioning. Your input will directly define how Egis is presented to clients globally.<br/><br/>
+        Please focus on <strong>what Egis is best known for</strong> in your sector, <strong>what makes us different</strong> vs competitors, and <strong>clear, specific descriptions</strong> - avoid generic wording like "innovative" or "end-to-end".<br/><br/>
+        Fields marked <strong style="color:#a4262c">*</strong> are required. The form should take <strong>20–30 minutes</strong> to complete.
+      </div>
+
+      <!-- Terminology note -->
+      <div class="term-table">
+        <div class="term-table-title">Terminology note</div>
+        <table>
+          <tr>
+            <td>Sector</td>
+            <td>= Market segment in the Egis taxonomy</td>
+          </tr>
+          <tr>
+            <td>Sub-sector</td>
+            <td>= Sub-segment in the Egis taxonomy</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="tag-row">
+        <span class="ftag">Urban Mobility · Metros · UMB01</span>
+        <span class="ftag">TRANSP01</span>
+        <span class="ftag">Digital Platform 2026</span>
+      </div>
+    </div>
+  </div>
+
+<!-- ══ SECTION 1 ══ -->
+  <div class="section-card">
+    <div class="section-label">Section 1 - Identification</div>
+
+    <div class="question">
+      <div class="two-col">
+        <div>
+          <div class="q-num">1</div>
+          <div class="q-text">First name <span class="auto-badge">Auto-filled</span></div>
+          <input class="ms-input autofill" type="text" value="Oliver" readonly/>
+        </div>
+        <div>
+          <div class="q-num">2</div>
+          <div class="q-text">Last name <span class="auto-badge">Auto-filled</span></div>
+          <input class="ms-input autofill" type="text" value="Tunnelworth" readonly/>
+        </div>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">3</div>
+      <div class="q-text">Email address <span class="auto-badge">Auto-filled</span></div>
+      <input class="ms-input autofill" type="text" value="o.tunnelworth@egis-group.com" readonly/>
+    </div>
+
+    <div class="question">
+      <div class="two-col">
+        <div>
+          <div class="q-num">4</div>
+          <div class="q-text">Sector <span style="color:#a19f9d;font-size:11px;font-weight:400">(segment in taxonomy)</span> <span class="auto-badge">Auto-filled</span></div>
+          <input class="ms-input autofill" type="text" value="Urban Mobility" readonly/>
+        </div>
+        <div>
+          <div class="q-num">5</div>
+          <div class="q-text">Sub-sector <span style="color:#a19f9d;font-size:11px;font-weight:400">(sub-segment in taxonomy)</span> <span class="auto-badge">Auto-filled</span></div>
+          <input class="ms-input autofill" type="text" value="Metros" readonly/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 2 ══ -->
+  <div class="section-card">
+    <div class="section-label">Section 2 - Client and market challenges (max 3)</div>
+
+    <div class="question">
+      <div class="q-desc">
+        What are the main challenges your clients are facing in this sector? Focus on the <strong>client problem</strong>, not Egis solutions. Be specific - avoid generic terms like "innovation" or "digitalisation".<br/>
+        <em>Examples: "Modernising metro systems without disrupting live operations" · "Meeting decarbonisation targets on new line construction"</em>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">6</div>
+      <div class="q-text">Challenge 1 - Short statement <span class="req">*</span></div>
+      <div class="q-desc">Short, clear statement - e.g. "Modernising metro systems without disrupting live operations"</div>
+      <input class="ms-input" type="text" value="Modernising ageing metro lines without disrupting live operations"/>
+    </div>
+    <div class="question">
+      <div class="q-num">7</div>
+      <div class="q-text">Challenge 1 - Description <span class="opt">(optional)</span></div>
+      <div class="q-desc">1–2 short lines if needed for clarity</div>
+      <textarea class="ms-textarea" rows="2">Many metro operators must upgrade signalling, rolling stock interfaces and control systems on lines that cannot be taken out of service - requiring phased, risk-managed delivery.</textarea>
+    </div>
+
+    <hr class="repeat-sep"/>
+
+    <div class="question">
+      <div class="q-num">8</div>
+      <div class="q-text">Challenge 2 - Short statement <span class="opt">(optional)</span></div>
+      <input class="ms-input" type="text" value="Achieving driverless operations on existing lines"/>
+    </div>
+    <div class="question">
+      <div class="q-num">9</div>
+      <div class="q-text">Challenge 2 - Description <span class="opt">(optional)</span></div>
+      <textarea class="ms-textarea" rows="2">Upgrading to GoA3/GoA4 on legacy infrastructure requires complex systems integration across CBTC, ATS, platform screen doors and civil works - often while the line remains in service.</textarea>
+    </div>
+
+    <hr class="repeat-sep"/>
+
+    <div class="question">
+      <div class="q-num">10</div>
+      <div class="q-text">Challenge 3 - Short statement <span class="opt">(optional)</span></div>
+      <input class="ms-input" type="text" placeholder="Short, clear statement"/>
+    </div>
+    <div class="question">
+      <div class="q-num">11</div>
+      <div class="q-text">Challenge 3 - Description <span class="opt">(optional)</span></div>
+      <textarea class="ms-textarea" rows="2" placeholder="1–2 lines if needed for clarity"></textarea>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3 ══ -->
+  <div class="section-card">
+    <div class="section-label">Section 3 - Key / High-Value Expertises (up to 3)</div>
+
+    <div class="question">
+      <div class="q-desc">
+        Core technical strengths that Egis is <strong>known for and wins work for</strong> in this sector. Choose the areas where Egis is clearly recognised and differentiated.<br/>
+        <em>Examples: Driverless metro systems · Modernisation under operation · Systems engineering for metro subsystems</em>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">12</div>
+      <div class="q-text">Expertise 1 - Name <span class="req">*</span></div>
+      <input class="ms-input" type="text" value="Driverless metro integration (GoA3/GoA4)"/>
+    </div>
+    <div class="question">
+      <div class="q-num">13</div>
+      <div class="q-text">Expertise 1 - Description <span class="req">*</span></div>
+      <div class="q-desc">Max 2–3 lines: what it is · why clients choose Egis / where it is applied</div>
+      <textarea class="ms-textarea">End-to-end engineering and systems integration for Grade of Automation 3 and 4 metro lines, from signalling architecture to operational acceptance. Proven in Europe and the Middle East.</textarea>
+    </div>
+
+    <hr class="repeat-sep"/>
+
+    <div class="question">
+      <div class="q-num">14</div>
+      <div class="q-text">Expertise 2 - Name <span class="opt">(optional)</span></div>
+      <input class="ms-input" type="text" value="Modernisation under operation"/>
+    </div>
+    <div class="question">
+      <div class="q-num">15</div>
+      <div class="q-text">Expertise 2 - Description <span class="opt">(optional)</span></div>
+      <textarea class="ms-textarea">Managing the full engineering chain for modernising metro lines while maintaining continuous passenger service - delivered in Toulouse and Marseille.</textarea>
+    </div>
+
+    <hr class="repeat-sep"/>
+
+    <div class="question">
+      <div class="q-num">16</div>
+      <div class="q-text">Expertise 3 - Name <span class="opt">(optional)</span></div>
+      <input class="ms-input" type="text" placeholder="Short, clear title"/>
+    </div>
+    <div class="question">
+      <div class="q-num">17</div>
+      <div class="q-text">Expertise 3 - Description <span class="opt">(optional)</span></div>
+      <textarea class="ms-textarea" placeholder="Max 2–3 lines: what it is · why clients choose Egis"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="q-num">18</div>
+      <div class="q-text">Additional expertises <span class="opt">(optional)</span></div>
+      <div class="q-desc">If you have more than 3 expertises to list, add them here.<br/>Format: <strong>Name ; Description</strong> - one entry per line.</div>
+      <textarea class="ms-textarea free" rows="4" placeholder="e.g.&#10;Systems Engineering &amp; ISI ; Integrated safety case management across all metro sub-systems, from CBTC to civil works."></textarea>
+    </div>
+
+    <div class="question">
+      <div class="q-num">19</div>
+      <div class="q-text">What makes Egis different in this sector? <span class="opt">(optional)</span></div>
+      <div class="q-desc">Be specific where possible: projects, geography, technical depth, partnerships, scale, operating context.</div>
+      <textarea class="ms-textarea" rows="3" placeholder="e.g. Egis is one of the few firms globally with proven GoA4 delivery experience on both greenfield and retrofit metro projects, across 3 continents."></textarea>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 4 ══ -->
+  <div class="section-card">
+    <div class="section-label">Section 4 - Solutions (up to 3)</div>
+
+    <div class="question">
+      <div class="q-desc">
+        Specific innovations or solutions that create clear client value in your sector. Often digital, sustainability-led, data-led or technical. <strong>Only include solutions that are more than standard service delivery.</strong><br/>
+        <em>Examples: Passenger-flow simulation (Viswalk®) · Geothermal energy integration in underground stations · Low-carbon tunnel lining with metal-fibre reinforcement</em><br/>
+        <strong>Note: BIM is not a solution in this taxonomy - it is a methodology.</strong>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">20</div>
+      <div class="q-text">Solution 1 - Name <span class="req">*</span></div>
+      <input class="ms-input" type="text" value="Passenger-flow simulation (Viswalk®)"/>
+    </div>
+    <div class="question">
+      <div class="q-num">21</div>
+      <div class="q-text">Solution 1 - Description <span class="req">*</span></div>
+      <div class="q-desc">Max 2–3 lines: what it does · how it improves client outcomes in this sector</div>
+      <textarea class="ms-textarea">Pedestrian and crowd-flow simulation to design and validate station layouts, evacuation scenarios and platform configurations prior to construction. Reduces design risk and improves safety compliance.</textarea>
+    </div>
+
+    <hr class="repeat-sep"/>
+
+    <div class="question">
+      <div class="q-num">22</div>
+      <div class="q-text">Solution 2 - Name <span class="opt">(optional)</span></div>
+      <input class="ms-input" type="text" value="Geothermal energy integration in underground stations"/>
+    </div>
+    <div class="question">
+      <div class="q-num">23</div>
+      <div class="q-text">Solution 2 - Description <span class="opt">(optional)</span></div>
+      <textarea class="ms-textarea">Design and integration of shallow geothermal systems in underground stations to reduce energy consumption. Deployed on Rennes Line B - delivering measurable operational carbon savings.</textarea>
+    </div>
+
+    <hr class="repeat-sep"/>
+
+    <div class="question">
+      <div class="q-num">24</div>
+      <div class="q-text">Solution 3 - Name <span class="opt">(optional)</span></div>
+      <input class="ms-input" type="text" placeholder="Short name of the solution"/>
+    </div>
+    <div class="question">
+      <div class="q-num">25</div>
+      <div class="q-text">Solution 3 - Description <span class="opt">(optional)</span></div>
+      <textarea class="ms-textarea" placeholder="Max 2–3 lines: what it does · how it improves client outcomes"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="q-num">26</div>
+      <div class="q-text">Additional solutions <span class="opt">(optional)</span></div>
+      <div class="q-desc">Format: <strong>Name ; Description</strong> - one entry per line.</div>
+      <textarea class="ms-textarea free" rows="3" placeholder="e.g.&#10;Low-carbon tunnel lining ; Metal-fibre reinforced concrete reducing embodied carbon by up to 30% vs conventional rebar - applied on Line 16."></textarea>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 5 ══ -->
+  <div class="section-card">
+    <div class="section-label">Section 5 - Transversal Solutions</div>
+
+    <div class="question">
+      <div class="q-desc">
+        Solutions that may apply across multiple sectors at Egis. <strong>Select only solutions that are actively delivered today in this sector.</strong>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">27</div>
+      <div class="q-text">Step 1 - Select from the list <span class="opt">(if applicable)</span></div>
+      <div class="ms-checks">
+        <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Digital Twin</span></label>
+        <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">AI &amp; Predictive Analytics</span></label>
+        <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Carbon LCA</span></label>
+        <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Act4Ecodesign</span></label>
+        <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Smart Mobility Data Platform</span></label>
+        <label class="ms-check-item"><input type="checkbox"/><span class="check-label">GIS &amp; Geospatial Analytics</span></label>
+        <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Asset Performance Management</span></label>
+        <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Noise &amp; Vibration Modelling</span></label>
+        <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Environmental Impact Assessment</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">28</div>
+      <div class="q-text">Step 2 - Add any missing transversal solutions <span class="opt">(if needed)</span></div>
+      <div class="q-desc">Format: <strong>Name - What it does - Why it matters</strong></div>
+      <textarea class="ms-textarea free" rows="3" placeholder="e.g. Real-time crowd simulation - Live passenger flow monitoring using sensor data - Enables dynamic platform management and improves safety response times"></textarea>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 6 ══ -->
+  <div class="section-card">
+    <div class="section-label">Section 6 - Services</div>
+
+    <div class="question">
+      <div class="q-desc">
+        Specialist services that Egis provides, <strong>unique to this sector</strong>. These require specific technical knowledge, processes or certifications.<br/>
+        <em>Examples: CBTC / ATS / PSD signalling integration · OCC modernisation and automation · Station &amp; interchange hub engineering</em>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">29</div>
+      <div class="q-text">Service 1 - Name <span class="req">*</span></div>
+      <input class="ms-input" type="text" value="CBTC / ATS / PSD signalling integration"/>
+    </div>
+    <div class="question">
+      <div class="q-num">30</div>
+      <div class="q-text">Service 1 - Description <span class="req">*</span></div>
+      <div class="q-desc">Max 2 lines: what Egis delivers · why it adds value</div>
+      <textarea class="ms-textarea">Design, specification and integration of Communication-Based Train Control (CBTC), Automatic Train Supervision (ATS) and Platform Screen Doors (PSD) across metro lines. Reduces signalling risk and ensures interoperability across subsystems.</textarea>
+    </div>
+
+    <hr class="repeat-sep"/>
+
+    <div class="question">
+      <div class="q-num">31</div>
+      <div class="q-text">Service 2 - Name <span class="opt">(optional)</span></div>
+      <input class="ms-input" type="text" value="OCC modernisation and automation"/>
+    </div>
+    <div class="question">
+      <div class="q-num">32</div>
+      <div class="q-text">Service 2 - Description <span class="opt">(optional)</span></div>
+      <textarea class="ms-textarea">End-to-end engineering of Operations Control Centre upgrades, from requirements to system acceptance, including SCADA, supervision and data interfaces.</textarea>
+    </div>
+
+    <hr class="repeat-sep"/>
+
+    <div class="question">
+      <div class="q-num">33</div>
+      <div class="q-text">Service 3 - Name <span class="opt">(optional)</span></div>
+      <input class="ms-input" type="text" placeholder="Short, clear title"/>
+    </div>
+    <div class="question">
+      <div class="q-num">34</div>
+      <div class="q-text">Service 3 - Description <span class="opt">(optional)</span></div>
+      <textarea class="ms-textarea" placeholder="Max 2 lines: what Egis delivers · why it adds value"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="q-num">35</div>
+      <div class="q-text">Additional services <span class="opt">(optional)</span></div>
+      <div class="q-desc">Format: <strong>Name ; Description</strong> - one entry per line.</div>
+      <textarea class="ms-textarea free" rows="3" placeholder="e.g.&#10;Station &amp; interchange hub engineering ; Full design of complex multimodal hubs including vertical transport and wayfinding systems."></textarea>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 7 ══ -->
+  <div class="section-card">
+    <div class="section-label">Section 7 - Transversal Services</div>
+
+    <div class="question">
+      <div class="q-desc">
+        Standard Egis services that apply across multiple sectors. <strong>Select only services that are actively delivered in this sector.</strong>
+      </div>
+    </div>
+
+    <div class="question">
+      <div class="q-num">36</div>
+      <div class="q-text">Select all services your Service Line delivers in this sector <span class="req">*</span></div>
+
+      <div class="service-groups">
+
+        <div class="service-group">
+          <div class="service-group-header open" onclick="toggleGroup(this)">
+            Architecture
+            <span class="toggle">▼</span>
+          </div>
+          <div class="service-group-body open">
+            <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Architecture Design<small>ARCH01</small></span></label>
+            <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Interior Design<small>ARCH02</small></span></label>
+            <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Urban Planning &amp; Design<small>ARCH03 - incl. Master planning, Town Planning</small></span></label>
+            <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Landscape Design<small>ARCH04</small></span></label>
+          </div>
+        </div>
+
+        <div class="service-group">
+          <div class="service-group-header open" onclick="toggleGroup(this)">
+            Advisory
+            <span class="toggle">▼</span>
+          </div>
+          <div class="service-group-body open">
+            <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Strategic advisory<small>ADV01</small></span></label>
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Technical advisory<small>ADV02</small></span></label>
+            <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Training<small>ADV03</small></span></label>
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Operational advisory<small>ADV04</small></span></label>
+          </div>
+        </div>
+
+        <div class="service-group">
+          <div class="service-group-header open" onclick="toggleGroup(this)">
+            Programme &amp; Project Management
+            <span class="toggle">▼</span>
+          </div>
+          <div class="service-group-body open">
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Portfolio / Programme management<small>PPM01</small></span></label>
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Project management<small>PPM02</small></span></label>
+          </div>
+        </div>
+
+        <div class="service-group">
+          <div class="service-group-header open" onclick="toggleGroup(this)">
+            Engineering
+            <span class="toggle">▼</span>
+          </div>
+          <div class="service-group-body open">
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Design - All design services<small>ENGD00</small></span></label>
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Design - Preliminary design<small>ENGD01</small></span></label>
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Design - Concept design<small>ENGD02</small></span></label>
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Design - Detailed design<small>ENGD03</small></span></label>
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Construction Management &amp; Works supervision<small>ENGCM01</small></span></label>
+            <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Testing and commissioning<small>ENGCM02</small></span></label>
+            <label class="ms-check-item"><input type="checkbox"/><span class="check-label">EPCM services<small>ENGE01</small></span></label>
+          </div>
+        </div>
+
+        <div class="service-group">
+          <div class="service-group-header open" onclick="toggleGroup(this)">
+            Operations
+            <span class="toggle">▼</span>
+          </div>
+          <div class="service-group-body open">
+            <label class="ms-check-item"><input type="checkbox"/><span class="check-label">Pure operations<small>OP01 - Operations, maintenance &amp; Asset Management</small></span></label>
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Delivery<small>OP02</small></span></label>
+            <label class="ms-check-item"><input type="checkbox" checked/><span class="check-label">Integrated operations<small>OP03</small></span></label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 8 ══ -->
+  <div class="section-card">
+    <div class="section-label">Section 8 - Final Comments</div>
+
+    <div class="question">
+      <div class="q-num">37</div>
+      <div class="q-text">Any additional comments <span class="opt">(optional)</span></div>
+      <div class="q-desc">Use this section to: flag anything important for positioning · reference key projects you'd like featured on the website · highlight nuances we should reflect on your sector page.</div>
+      <textarea class="ms-textarea" rows="5" placeholder="e.g. The GoA4 capability is exclusive to Metros and should not overlap with the Tramway page. Key reference project: Grand Paris Express Line 16."></textarea>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-card">
+    <p>Fields marked <strong style="color:#a4262c">*</strong> are required &nbsp;·&nbsp; Your responses are saved automatically</p>
+    <button class="ms-submit" onclick="this.textContent='✓ Response submitted';this.style.background='#107c10';this.disabled=true">Submit</button>
+  </div>
+
+  <div class="ms-footer">
+    <svg width="14" height="14" viewBox="0 0 22 22" fill="none" style="vertical-align:middle;margin-right:4px"><rect width="22" height="22" rx="3" fill="#0078d4"/><rect x="5" y="5" width="7" height="2" rx="1" fill="white"/><rect x="5" y="9" width="12" height="2" rx="1" fill="white"/><rect x="5" y="13" width="9" height="2" rx="1" fill="white"/></svg>
+    Microsoft Forms &nbsp;·&nbsp; Never submit passwords through Forms &nbsp;·&nbsp; This form was created inside Egis.
+  </div>
+
+</div>
+
+<script>
+function toggleGroup(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+</script>
+</body>
+</html>
